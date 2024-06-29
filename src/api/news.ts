@@ -1,26 +1,42 @@
+import { API_URL } from './api';
+
 export interface News {
     id: number;
     title: string;
     url: string;
 }
 
+export enum FilterType {
+    topstories = 'topstories',
+    newstories = 'newstories',
+    beststories = 'beststories',
+}
+
+export type NewsFilterType = FilterType.topstories | FilterType.newstories | FilterType.beststories;
+
 type GetNewsProps = {
     page: number;
+    filterType: NewsFilterType;
     onSuccess?: (news: News[]) => void;
     onError?: (err: string) => void;
     onFinally?: () => void;
 };
 
-export const fetchNews = async ({ page, onSuccess, onError, onFinally }: GetNewsProps) => {
+export const fetchNews = async ({ page, filterType, onSuccess, onError, onFinally }: GetNewsProps) => {
     const pageSize = 30;
     const startIndex = (page - 1) * pageSize;
     const endIndex = startIndex + pageSize;
 
-    const topStoriesUrl = 'https://hacker-news.firebaseio.com/v0/topstories.json';
-    const storyUrl = (id: number) => `https://hacker-news.firebaseio.com/v0/item/${id}.json`;
+    const storyTypeUrls: Record<NewsFilterType, string> = {
+        topstories: `${API_URL}/topstories.json`,
+        newstories: `${API_URL}/newstories.json`,
+        beststories: `${API_URL}/beststories.json`,
+    };
+
+    const storyUrl = (id: number) => `${API_URL}/item/${id}.json`;
 
     try {
-        const response = await fetch(topStoriesUrl);
+        const response = await fetch(storyTypeUrls[filterType]);
         if (!response.ok) {
             throw new Error('Failed to fetch top stories');
         }
