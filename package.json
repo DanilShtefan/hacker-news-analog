@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://danilshtefan.github.io/hacker-news-analog",
+  "homepage": "https://danilshtefan.github.io/hacker-news-analog/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
