@@ -27,6 +27,7 @@ const NewsList: React.FC = () => {
 
     useEffect(() => {
         getNews();
+        setRefreshTimer(REFRESH_INTERVAL);
     }, [page, filterType]);
 
     useEffect(() => {
