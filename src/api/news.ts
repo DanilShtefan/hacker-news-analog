@@ -1,5 +1,7 @@
 import { API_URL } from './api';
 
+const PAGE_SIZE = 30;
+
 export interface News {
     id: number;
     title: string;
@@ -23,9 +25,8 @@ type GetNewsProps = {
 };
 
 export const fetchNews = async ({ page, filterType, onSuccess, onError, onFinally }: GetNewsProps) => {
-    const pageSize = 30;
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
+    const startIndex = (page - 1) * PAGE_SIZE;
+    const endIndex = startIndex + PAGE_SIZE;
 
     const storyTypeUrls: Record<NewsFilterType, string> = {
         topstories: `${API_URL}/topstories.json`,
