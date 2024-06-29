@@ -2,7 +2,7 @@ import { API_URL, CustomRequest } from './api';
 
 const MAX_COMMENTS = 10;
 
-interface Comment {
+export interface Comment {
     id: number;
     text: string;
     by: string;

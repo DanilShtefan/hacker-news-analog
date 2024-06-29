@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './comments-list.scss';
-import { fetchComments } from '../../api/comments';
-
-interface Comment {
-    id: number;
-    text: string;
-    by: string;
-    score: number;
-    kids?: number[];
-}
+import { fetchComments, Comment } from '../../api/comments';
 
 interface CommentsListProps {
     commentIds: number[];
