@@ -2,14 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './news-item.scss';
 import CommentsList from '../comments-list';
 import { fetchCommentIds } from '../../api/comments';
+import { News } from '../../api/news';
 
-interface NewsItemProps {
-    id: number;
-    title: string;
-    url: string;
-}
-
-const NewsItem: React.FC<NewsItemProps> = ({ id, title, url }) => {
+const NewsItem: React.FC<News> = ({ id, title, url, by, score }) => {
     const [commentIds, setCommentIds] = useState<number[]>([]);
     const [showComments, setShowComments] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
@@ -41,6 +36,9 @@ const NewsItem: React.FC<NewsItemProps> = ({ id, title, url }) => {
         <div className="news-item">
             <div className="news-item-header">
                 <div>
+                    <strong>
+                        {by} [&#9733; {score || 0}]:{' '}
+                    </strong>
                     <a href={url} target="_blank" rel="noopener noreferrer">
                         {title}
                     </a>

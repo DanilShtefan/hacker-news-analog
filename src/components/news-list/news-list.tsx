@@ -99,7 +99,7 @@ const NewsList: React.FC = () => {
                 <button onClick={handleManualRefresh}>Refresh ({refreshTimer}s)</button>
             </div>
             {news.map((item) => (
-                <NewsItem key={item.id} id={item.id} title={item.title} url={item.url} />
+                <NewsItem key={item.id} {...item} />
             ))}
             <div className="pagination">
                 <button onClick={handlePrevPage} disabled={page === 1}>
