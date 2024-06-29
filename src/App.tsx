@@ -1,11 +1,15 @@
-import './app.scss'
+import React from 'react';
+import Header from './components/header';
+import NewsList from './components/news-list';
+import './app.scss';
 
-function App() {
+const App: React.FC = () => {
+    return (
+        <div className="app">
+            <Header />
+            <NewsList />
+        </div>
+    );
+};
 
-  return (
-    <>
-    </>
-  )
-}
-
-export default App
+export default App;
