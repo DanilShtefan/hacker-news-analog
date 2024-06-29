@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import NewsItem from '../news-item';
 import './news-list.scss';
 import { FilterType, News, NewsFilterType, fetchNews } from '../../api/news';
+
+const REFRESH_INTERVAL = 30;
 
 const NewsList: React.FC = () => {
     const [news, setNews] = useState<News[]>([]);
@@ -9,8 +11,10 @@ const NewsList: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [filterType, setFilterType] = useState<NewsFilterType>(FilterType.topstories);
+    const [refreshTimer, setRefreshTimer] = useState<number>(REFRESH_INTERVAL);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-    useEffect(() => {
+    const getNews = useCallback(() => {
         setLoading(true);
         fetchNews({
             page,
@@ -20,6 +24,29 @@ const NewsList: React.FC = () => {
             onFinally: () => setLoading(false),
         });
     }, [page, filterType]);
+
+    useEffect(() => {
+        getNews();
+    }, [page, filterType]);
+
+    useEffect(() => {
+        timerRef.current = setInterval(() => {
+            setRefreshTimer((prevTimer) => {
+                if (prevTimer === 1) {
+                    getNews();
+                    return REFRESH_INTERVAL;
+                } else {
+                    return prevTimer - 1;
+                }
+            });
+        }, 1000);
+
+        return () => {
+            if (timerRef.current) {
+                clearInterval(timerRef.current);
+            }
+        };
+    }, [filterType]);
 
     const handlePrevPage = () => {
         setPage((prevPage) => Math.max(prevPage - 1, 1));
@@ -32,6 +59,11 @@ const NewsList: React.FC = () => {
     const handleTypeChange = (type: NewsFilterType) => {
         setFilterType(type);
         setPage(1);
+    };
+
+    const handleManualRefresh = () => {
+        getNews();
+        setRefreshTimer(REFRESH_INTERVAL);
     };
 
     if (loading) {
@@ -63,6 +95,7 @@ const NewsList: React.FC = () => {
                 >
                     Best Stories
                 </button>
+                <button onClick={handleManualRefresh}>Refresh ({refreshTimer}s)</button>
             </div>
             {news.map((item) => (
                 <NewsItem key={item.id} title={item.title} url={item.url} />
