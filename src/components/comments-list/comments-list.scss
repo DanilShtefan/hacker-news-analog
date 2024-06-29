@@ -1,0 +1,41 @@
+.comments-list {
+    margin-top: 10px;
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: left;
+
+    a {
+        font-size: 14px;
+    }
+  
+    h3 {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    button {
+        font-size: 12px;
+    }
+
+    .comment-header {
+        overflow-wrap: anywhere;
+    }
+
+    .comment-author {
+        font-size: 12px;
+        color: gray;
+        margin-bottom: 5px;
+    }
+
+    .comment-item {
+        margin-bottom: 10px;
+        padding: 5px 0;
+        border-radius: 5px;
+
+        &:hover{
+            background-color: rgba($color: black, $alpha: .05);
+        }
+    }
+}

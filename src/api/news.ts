@@ -1,4 +1,4 @@
-import { API_URL } from './api';
+import { API_URL, CustomRequest } from './api';
 
 const PAGE_SIZE = 15;
 
@@ -16,13 +16,10 @@ export enum FilterType {
 
 export type NewsFilterType = FilterType.topstories | FilterType.newstories | FilterType.beststories;
 
-type GetNewsProps = {
+interface GetNewsProps extends CustomRequest<News[]> {
     page: number;
     filterType: NewsFilterType;
-    onSuccess?: (news: News[]) => void;
-    onError?: (err: string) => void;
-    onFinally?: () => void;
-};
+}
 
 export const fetchNews = async ({ page, filterType, onSuccess, onError, onFinally }: GetNewsProps) => {
     const startIndex = (page - 1) * PAGE_SIZE;

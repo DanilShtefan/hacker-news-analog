@@ -16,5 +16,26 @@
             text-decoration: underline;
         }
     }
+
+    button {
+        margin-top: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 14px;
+    }
+
+    .news-item-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .toggle-comments {
+        min-width: 100px;
+        width: 100px;
+    }
 }
   
